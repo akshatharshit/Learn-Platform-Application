@@ -2,6 +2,14 @@ import React, { useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
+ const API_BASE_URL =
+    import.meta.env.VITE_REACT_APP_BACKEND_URL || "http://localhost:5001";
+
+  const api = axios.create({
+    baseURL: API_BASE_URL,
+    withCredentials: true,
+  });
+
 const CreateCourseForm = () => {
     const [courseData, setCourseData] = useState({
         title: "",
@@ -72,7 +80,7 @@ const CreateCourseForm = () => {
         });
 
         try {
-            const res = await axios.post("/api/courses/add-course", form, {
+            const res = await api.post("/api/courses/", form, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             toast.success("✅ Course created successfully!");
