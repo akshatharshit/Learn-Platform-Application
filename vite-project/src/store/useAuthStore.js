@@ -84,6 +84,7 @@ export const useAuthStore = create((set) => ({
     try {
       const res = await api.get("/api/auth/profile", {
         withCredentials: true,
+  
       });
       const user = res.data?.user;
       localStorage.setItem("user", JSON.stringify(user));
