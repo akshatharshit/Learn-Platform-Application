@@ -15,10 +15,19 @@ const CoursesPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchInput, setSearchInput] = useState("");
 
+
+  const API_BASE_URL =
+    import.meta.env.VITE_REACT_APP_BACKEND_URL || "http://localhost:5001";
+
+  const api = axios.create({
+    baseURL: API_BASE_URL,
+    withCredentials: true,
+  });
+
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await axios.get("/api/courses");
+        const res = await api.get("/api/courses");
         const sorted = sortCourses(res.data?.courses || [], "newest");
         setCourses(sorted);
         setFilteredCourses(sorted);
