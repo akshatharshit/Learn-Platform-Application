@@ -3,6 +3,14 @@ import axios from "axios";
 
 const API_BASE = "/api/pdf";
 
+const API_BASE_URL =
+  import.meta.env.VITE_REACT_APP_BACKEND_URL || "http://localhost:5001"; 
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+});
+
 export const usePDFStore = create((set) => ({
   pdfs: [],
   isUploading: false,
@@ -18,7 +26,7 @@ export const usePDFStore = create((set) => ({
       formData.append("pdf", file);
       formData.append("title", title);
 
-      const res = await axios.post(`${API_BASE}/upload`, formData, {
+      const res = await api.post(`${API_BASE}/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });
@@ -45,7 +53,7 @@ export const usePDFStore = create((set) => ({
   fetchPDFs: async () => {
     set({ isFetching: true, pdfError: null });
     try {
-      const res = await axios.get(`${API_BASE}`, {
+      const res = await api.get(`${API_BASE}`, {
         withCredentials: true,
       });
 
@@ -65,7 +73,7 @@ export const usePDFStore = create((set) => ({
   deletePDF: async (id) => {
     set({ isDeleting: true, pdfError: null });
     try {
-      await axios.delete(`${API_BASE}/${id}`, {
+      await api.delete(`${API_BASE}/${id}`, {
         withCredentials: true,
       });
 

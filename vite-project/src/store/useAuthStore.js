@@ -1,14 +1,16 @@
 import { create } from "zustand";
 import axios from "axios";
 
-// ✅ Set API base URL depending on environment
+
 const API_BASE_URL =
-  import.meta.env.FRONTEND_URL || "http://localhost:5000"; // fallback for local dev
+  import.meta.env.VITE_REACT_APP_BACKEND_URL || "http://localhost:5001"; 
 
 const api = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true,
 });
+
+
 
 // ✅ Safe localStorage parsing
 const getStoredUser = () => {

@@ -1,6 +1,14 @@
 import { create } from "zustand";
 import axios from "axios";
 
+const API_BASE_URL =
+  import.meta.env.VITE_REACT_APP_BACKEND_URL || "http://localhost:5001"; 
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+});
+
 export const useResultStore = create((set) => ({
   results: [],
   currentResult: null,
@@ -12,7 +20,7 @@ export const useResultStore = create((set) => ({
   submitResult: async (data) => {
     set({ isSubmitting: true, error: null });
     try {
-      const res = await axios.post("/api/results", data, {
+      const res = await api.post("/api/results", data, {
         withCredentials: true,
       });
       set((state) => ({
@@ -33,7 +41,7 @@ export const useResultStore = create((set) => ({
 getAllResults: async () => {
   set({ isFetching: true, error: null });
   try {
-    const res = await axios.get("/api/results/all", {
+    const res = await api.get("/api/results/all", {
       withCredentials: true,
     });
     set({ results: res.data, isFetching: false });
@@ -49,7 +57,7 @@ getAllResults: async () => {
   getMyResults: async () => {
     set({ isFetching: true, error: null });
     try {
-      const res = await axios.get("/api/results/my", {
+      const res = await api.get("/api/results/my", {
         withCredentials: true,
       });
       set({ results: res.data, isFetching: false });
@@ -65,7 +73,7 @@ getAllResults: async () => {
   getResultById: async (id) => {
     set({ isFetching: true, error: null });
     try {
-      const res = await axios.get(`/api/results/${id}`, {
+      const res = await api.get(`/api/results/${id}`, {
         withCredentials: true,
       });
       set({ currentResult: res.data, isFetching: false });
@@ -81,7 +89,7 @@ getAllResults: async () => {
   deleteResultById: async (id) => {
     set({ error: null });
     try {
-      await axios.delete(`/api/results/${id}`, {
+      await api.delete(`/api/results/${id}`, {
         withCredentials: true,
       });
       set((state) => ({

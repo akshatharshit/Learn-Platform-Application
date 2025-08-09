@@ -1,6 +1,14 @@
 import { create } from "zustand";
 import axios from "axios";
 
+const API_BASE_URL =
+  import.meta.env.VITE_REACT_APP_BACKEND_URL || "http://localhost:5001"; 
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+});
+
 export const useCourseStore = create((set, get) => ({
   courses: [],
   selectedCourse: null,
@@ -11,7 +19,7 @@ export const useCourseStore = create((set, get) => ({
   createCourse: async (courseData) => {
     set({ isLoading: true, courseError: null });
     try {
-      const res = await axios.post("/api/courses", courseData, {
+      const res = await api.post("/api/courses", courseData, {
         withCredentials: true,
       });
       const newCourse = res.data.course;
@@ -33,7 +41,7 @@ export const useCourseStore = create((set, get) => ({
   fetchCourses: async () => {
     set({ isLoading: true, courseError: null });
     try {
-      const res = await axios.get("/api/courses", {
+      const res = await api.get("/api/courses", {
         withCredentials: true,
       });
       set({ courses: res.data.courses || [], isLoading: false });
@@ -49,7 +57,7 @@ export const useCourseStore = create((set, get) => ({
   getCourseById: async (id) => {
     set({ isLoading: true, courseError: null });
     try {
-      const res = await axios.get(`/api/courses/${id}`, {
+      const res = await api.get(`/api/courses/${id}`, {
         withCredentials: true,
       });
       set({ selectedCourse: res.data.data, isLoading: false });
@@ -64,7 +72,7 @@ export const useCourseStore = create((set, get) => ({
   updateCourse: async (id, updatedData) => {
     set({ isLoading: true, courseError: null });
     try {
-      const res = await axios.put(`/api/courses/${id}`, updatedData, {
+      const res = await api.put(`/api/courses/${id}`, updatedData, {
         withCredentials: true,
       });
 
@@ -102,7 +110,7 @@ export const useCourseStore = create((set, get) => ({
   deleteCourse: async (id) => {
     set({ isLoading: true, courseError: null });
     try {
-      await axios.delete(`/api/courses/${id}`, {
+      await api.delete(`/api/courses/${id}`, {
         withCredentials: true,
       });
       set((state) => ({

@@ -1,6 +1,14 @@
 import { create } from "zustand";
 import axios from "axios";
 
+const API_BASE_URL =
+  import.meta.env.VITE_REACT_APP_BACKEND_URL || "http://localhost:5001"; 
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+});
+
 export const useSeriesStore = create((set, get) => ({
   seriesList: [],
   selectedSeries: null,
@@ -11,7 +19,7 @@ export const useSeriesStore = create((set, get) => ({
   fetchSeries: async () => {
     try {
       set({ loading: true });
-      const res = await axios.get("/api/series");
+      const res = await api.get("/api/series");
       set({ seriesList: res.data, error: null });
     } catch (err) {
       set({ error: err.response?.data?.error || "Failed to fetch series" });
@@ -24,7 +32,7 @@ export const useSeriesStore = create((set, get) => ({
   getSeriesById: async (id) => {
     try {
       set({ loading: true });
-      const res = await axios.get(`/api/series/${id}`);
+      const res = await api.get(`/api/series/${id}`);
       set({ selectedSeries: res.data, error: null });
     } catch (err) {
       set({ error: err.response?.data?.error || "Series not found" });
@@ -37,7 +45,7 @@ export const useSeriesStore = create((set, get) => ({
   createSeries: async (data) => {
     try {
       set({ loading: true });
-      const res = await axios.post("/api/series", data);
+      const res = await api.post("/api/series", data);
       set((state) => ({
         seriesList: [res.data, ...state.seriesList],
         error: null,
@@ -55,7 +63,7 @@ export const useSeriesStore = create((set, get) => ({
   updateSeries: async (id, updatedData) => {
     try {
       set({ loading: true });
-      const res = await axios.put(`/api/series/${id}`, updatedData);
+      const res = await api.put(`/api/series/${id}`, updatedData);
       set((state) => ({
         seriesList: state.seriesList.map((s) =>
           s._id === id ? res.data.series : s
@@ -74,7 +82,7 @@ export const useSeriesStore = create((set, get) => ({
   deleteSeries: async (id) => {
     try {
       set({ loading: true });
-      await axios.delete(`/api/series/${id}`);
+      await api.delete(`/api/series/${id}`);
       set((state) => ({
         seriesList: state.seriesList.filter((s) => s._id !== id),
         selectedSeries: null,
@@ -91,7 +99,7 @@ export const useSeriesStore = create((set, get) => ({
   addQuestion: async (seriesId, questionData) => {
     try {
       set({ loading: true });
-      const res = await axios.post(
+      const res = await api.post(
         `/api/series/${seriesId}/questions`,
         questionData
       );
@@ -113,7 +121,7 @@ export const useSeriesStore = create((set, get) => ({
   updateQuestion: async (seriesId, questionId, updatedData) => {
     try {
       set({ loading: true });
-      const res = await axios.put(
+      const res = await api.put(
         `/api/series/${seriesId}/questions/${questionId}`,
         updatedData
       );
@@ -140,7 +148,7 @@ export const useSeriesStore = create((set, get) => ({
   deleteQuestion: async (seriesId, questionId) => {
     try {
       set({ loading: true });
-      const res = await axios.delete(
+      const res = await api.delete(
         `/api/series/${seriesId}/questions/${questionId}`
       );
       set((state) => ({
@@ -160,7 +168,7 @@ export const useSeriesStore = create((set, get) => ({
       set({ loading: true });
       const formData = new FormData();
       formData.append("image", file);
-      const res = await axios.post("/api/series/upload/image", formData);
+      const res = await api.post("/api/series/upload/image", formData);
       return res.data.url;
     } catch (err) {
       set({ error: err.response?.data?.error || "Failed to upload image" });
@@ -176,7 +184,7 @@ export const useSeriesStore = create((set, get) => ({
       set({ loading: true });
       const formData = new FormData();
       formData.append("video", file);
-      const res = await axios.post(
+      const res = await api.post(
         `/api/series/upload/video/${seriesId}`,
         formData
       );
