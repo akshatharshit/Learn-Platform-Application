@@ -1,6 +1,14 @@
 import { create } from "zustand";
 import axios from "axios";
 
+// ✅ Set API base URL depending on environment
+const API_BASE_URL =
+  import.meta.env.FRONTEND_URL || "http://localhost:5000"; // fallback for local dev
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+});
 
 // ✅ Safe localStorage parsing
 const getStoredUser = () => {
@@ -23,7 +31,7 @@ export const useAuthStore = create((set) => ({
   register: async (userData) => {
     set({ isSigningUp: true, authError: null });
     try {
-      const res = await axios.post("/api/auth/register", userData, {
+      const res = await api.post("/api/auth/register", userData, {
         withCredentials: true,
       });
       const user = res.data.user;
@@ -43,7 +51,7 @@ export const useAuthStore = create((set) => ({
   login: async (credentials) => {
     set({ isLoggingIn: true, authError: null });
     try {
-      const res = await axios.post("/api/auth/login", credentials, {
+      const res = await api.post("/api/auth/login", credentials, {
         withCredentials: true,
       });
       const user = res.data.user;
@@ -62,7 +70,7 @@ export const useAuthStore = create((set) => ({
   // ✅ Logout
   logout: async () => {
     try {
-      await axios.post("/api/auth/logout", {}, { withCredentials: true });
+      await api.post("/api/auth/logout", {}, { withCredentials: true });
     } catch (err) {
       console.error("Logout error:", err);
     }
@@ -74,7 +82,7 @@ export const useAuthStore = create((set) => ({
   fetchProfile: async () => {
     set({ isLoadingProfile: true });
     try {
-      const res = await axios.get("/api/auth/profile", {
+      const res = await api.get("/api/auth/profile", {
         withCredentials: true,
       });
       const user = res.data?.user;
