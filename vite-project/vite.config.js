@@ -8,8 +8,14 @@ export default ({ mode }) => {
 
   return defineConfig({
     plugins: [react(), tailwindcss()],
-    // server: {
-      
-    // },
+    server: {
+      proxy: {
+        '/api': {
+          target: env.VITE_REACT_APP_BACKEND_URL, 
+          changeOrigin: true,
+          secure: false,
+        },
+      },
+    },
   });
 };
