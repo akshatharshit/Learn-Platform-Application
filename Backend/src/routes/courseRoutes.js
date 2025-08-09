@@ -19,7 +19,7 @@ const upload = multer({
 });
 
 router.post(
-  "/add-course",
+  "/",
   protect,
   checkTeacherRole,
   upload.fields([
