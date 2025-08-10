@@ -1,8 +1,13 @@
 import { create } from "zustand";
 import axios from "axios";
 
-// Make sure to define this in your .env file
-const API_KEY = import.meta.env.VITE_REACT_APP_NEWS_API_KEY;
+const API_BASE_URL =
+  import.meta.env.VITE_REACT_APP_BACKEND_URL || "http://localhost:5001";
+
+const api = axios.create({
+  baseURL: API_BASE_URL + "/api",
+  withCredentials: true,
+});
 
 export const useNewsStore = create((set, get) => ({
   news: [],
@@ -12,11 +17,11 @@ export const useNewsStore = create((set, get) => ({
   selectedNews: null,
 
   filters: {
-    language: "en",               // Supported: ar, de, en, es, fr, etc.
-    sortBy: "publishedAt",        // Also "relevancy", "popularity"
+    language: "en",
+    sortBy: "publishedAt",
     isEducationOnly: false,
     search: "",
-    from: "",                     // Format: "YYYY-MM-DD"
+    from: "",
     to: "",
   },
 
@@ -35,16 +40,12 @@ export const useNewsStore = create((set, get) => ({
       to: filters.to || undefined,
       page: loadMore ? page + 1 : 1,
       pageSize: 20,
-      apiKey: API_KEY,
     };
 
     set({ isLoading: true, error: null });
 
     try {
-      const response = await axios.get("https://newsapi.org/v2/everything", {
-        params,
-        withCredentials: false, 
-      });
+      const response = await api.get("/news", { params }); // backend call
 
       const articles = response.data.articles.map((article) => ({
         id: article.url,

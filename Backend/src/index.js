@@ -9,7 +9,7 @@ import resultRoutes from "./routes/resultRoutes.js";
 import pdfRoutes from "./routes/pdfRoutes.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
-
+import newsRoutes from "./routes/newsRoutes.js"
 
 dotenv.config();
 
@@ -30,7 +30,7 @@ app.use("/api/results", resultRoutes);
 app.use("/api/pdf", pdfRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api", paymentRoutes);
-
+app.use("/api", newsRoutes);
 
 // DB Connection
 mongoose.connect(process.env.MONGO_URI, {
