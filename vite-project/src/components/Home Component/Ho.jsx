@@ -88,9 +88,9 @@ export default function Ho() {
             </div>
             {/* User Stats Parade */}
             <div className="flex gap-6 mt-4 text-base-content/70">
-              <StatBadge icon={<FaUserGraduate />} label="Active Learners" value="10,800+" />
-              <StatBadge icon={<FaBook />} label="Courses" value="340+" />
-              <StatBadge icon={<FaUserFriends />} label="Community" value="21K+" />
+              <StatBadge icon={<FaUserGraduate />} label="Active Learners" value="10+" />
+              <StatBadge icon={<FaBook />} label="Courses" value="24+" />
+              <StatBadge icon={<FaUserFriends />} label="Community" value="21+" />
               <StatBadge icon={<FaClock />} label="Avg. Response" value="2 min" />
             </div>
           </div>
@@ -191,7 +191,7 @@ export default function Ho() {
       </section>
 
       {/* ---- PRICING ---- */}
-      <section className="w-full max-w-6xl mx-auto my-16 flex flex-col lg:flex-row gap-10 justify-center items-stretch">
+      {/* <section className="w-full max-w-6xl mx-auto my-16 flex flex-col lg:flex-row gap-10 justify-center items-stretch">
         <PricingCard
           color="primary"
           title="Free Starter"
@@ -226,7 +226,7 @@ export default function Ho() {
             "Group & assignment support"
           ]}
         />
-      </section>
+      </section> */}
 
       {/* ---- FAQ ---- */}
       <section className="w-full max-w-3xl mx-auto mb-20 px-2">
@@ -239,12 +239,12 @@ export default function Ho() {
       </section>
 
       {/* ---- FOOTER ---- */}
-      <footer className="w-full text-center pb-6 pt-8 border-t border-base-300 text-base-content/60 bg-base-100/95 text-xs font-medium">
+      {/* <footer className="w-full text-center pb-6 pt-8 border-t border-base-300 text-base-content/60 bg-base-100/95 text-xs font-medium">
         <span>
           &copy; {new Date().getFullYear()} <b className="text-primary font-bold">Learnify</b> &mdash; 
           Powered by community, code, and coffee ☕
         </span>
-      </footer>
+      </footer> */}
     </main>
   );
 }
