@@ -2,6 +2,14 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const API_BASE_URL =
+  import.meta.env.VITE_REACT_APP_BACKEND_URL || "http://localhost:5001"; 
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+});
+
 const ResultDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -11,7 +19,7 @@ const ResultDetailPage = () => {
   useEffect(() => {
     const fetchResult = async () => {
       try {
-        const { data } = await axios.get(`/api/results/${id}`);
+        const { data } = await api.get(`/api/results/${id}`);
         setResult(data.result);
       } catch (err) {
         console.error(err);
