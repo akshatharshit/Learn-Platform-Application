@@ -48,7 +48,7 @@ export const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    generateToken(user._id, res); // Sets cookie
+    generateToken(user._id, res); 
 
     res.status(200).json({
       message: "Login successful",
