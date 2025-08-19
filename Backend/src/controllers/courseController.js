@@ -8,7 +8,7 @@ export const addNewCourse = async (req, res) => {
       title,
       subtitle,
       description,
-      pricing,
+      // pricing,
       category,
       level,
       primaryLanguage,
@@ -17,8 +17,13 @@ export const addNewCourse = async (req, res) => {
       lectures,
     } = req.body;
 
+    // // ✅ Validate core fields
+    // if (!title || !description || !pricing || !category || !level || !lectures) {
+    //   return res.status(400).json({ message: "All fields are required" });
+    // }
+
     // ✅ Validate core fields
-    if (!title || !description || !pricing || !category || !level || !lectures) {
+    if (!title || !description  || !category || !level || !lectures) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -88,7 +93,8 @@ export const addNewCourse = async (req, res) => {
       title,
       subtitle,
       description,
-      pricing,
+      // pricing,
+      pricing: 0,
       category,
       level,
       primaryLanguage,

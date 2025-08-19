@@ -18,10 +18,10 @@ const CreateCourseForm = () => {
         pricing: "",
         category: "",
         level: "",
-        primaryLanguage: "", // ✅ NEW
-        welcomeMessage: "",   // ✅ NEW
-        objectives: "",       // ✅ NEW
-        isPublished: false,   // ✅ NEW
+        primaryLanguage: "", 
+        welcomeMessage: "",   
+        objectives: "",       
+        isPublished: false,   
         image: null,
     });
 
@@ -29,7 +29,7 @@ const CreateCourseForm = () => {
         { title: "", video: null, freePreview: false },
     ]);
 
-    const [isSubmitting, setIsSubmitting] = useState(false); // ✅ for submit control
+    const [isSubmitting, setIsSubmitting] = useState(false); 
 
     const handleCourseChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -177,7 +177,7 @@ const CreateCourseForm = () => {
                                 required
                             />
                         </div>
-                        <div>
+                        {/* <div>
                             <label className="label">Pricing (₹)</label>
                             <input
                                 type="number"
@@ -187,7 +187,7 @@ const CreateCourseForm = () => {
                                 value={courseData.pricing}
                                 onChange={handleCourseChange}
                             />
-                        </div>
+                        </div> */}
                         <div className="md:col-span-2">
                             <label className="label">Course Image</label>
                             <input
