@@ -6,7 +6,8 @@ import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import CourseRoadmap from "./CourseRoadmap";
 
-export default function CourseDetailPage() {
+export default function CourseDetailPage() { 
+  
   const { id } = useParams();
   const navigate = useNavigate();
   const { selectedCourse, getCourseById, isLoading, updateCourse } = useCourseStore();
@@ -99,7 +100,7 @@ export default function CourseDetailPage() {
         }
       };
 
-      setTimeout(checkPayment, 5000); // Delay to give time for PayPal checkout
+      setTimeout(checkPayment, 5000); 
     }
   };
 
@@ -170,7 +171,7 @@ export default function CourseDetailPage() {
                   ₹{pricing === 0 ? "Free" : pricing}
                 </p>
                 <button className="btn btn-success" onClick={handleBuy}>
-                  Buy Now
+                  Enroll
                 </button>
               </div>
             )}
